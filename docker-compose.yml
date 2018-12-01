@@ -1,0 +1,25 @@
+version: "2.3"
+services:
+  unms:
+    image: oznu/unms:latest
+    container_name: unms
+    network_mode: ${NETWORK}
+    hostname: unms
+    domainname: ${DOMAINNAME}
+    restart: always
+    ports:
+      - ${HTTP}:80
+      - ${HTTPS}:443
+    environment:
+      - TZ=${TZ}
+      - QUIET_MODE=${QUIET_MODE}
+    volumes:
+      - unms:/config
+      - ${LOGROTATE}:/etc/logrotate.d/unms
+    healthcheck:
+      test: curl --fail http://localhost:80 || exit 1
+      start_period: 500s
+
+volumes:
+  unms:
+    driver: local

@@ -1,0 +1,8 @@
+/config/unms/logs/*.log {
+	daily
+	copytruncate
+	missingok
+	rotate 7
+	compress
+	delaycompress
+}
